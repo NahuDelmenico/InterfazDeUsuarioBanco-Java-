@@ -1,49 +1,100 @@
 import java.time.LocalDate;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public abstract class Main {
 	
 	public static void main(String[] args) {
-		
+		 
 		Banco Frances = new Banco("Frances");
 		
 		CajaAhorro CuentaNahuel = new CajaAhorro(1,2000000.0,false); 
 		
 		Administrador Gerente = new Administrador("UserBank", "123456" , LocalDate.of(2000, 1, 1), Frances, 1);
-		Cliente Nahuel = new Cliente("Nahuel Delmenico", "Nahuel123456",LocalDate.of(2024, 10, 20), Frances, CuentaNahuel);
+		Cliente Nahuel = new Cliente("N", "1",LocalDate.of(2024, 10, 20), Frances, CuentaNahuel);
 		
 		Usuario.getUsuarios().add(Nahuel);
 		Usuario.getUsuarios().add(Gerente);
 		
-		if (Usuario.Login(JOptionPane.showInputDialog("Ingrese su nombre de usurio"), JOptionPane.showInputDialog("Ingrese la contraseña")) == true) {
+		
+		boolean conectado = true;
+		
+		JOptionPane.showMessageDialog(null, "Bienvenido a BBVA Argentina ");
+		while(conectado == true) {
 			
-			int a = JOptionPane.showOptionDialog(null, "Selecicones la accion a realizar", null, 0, 0, Opciones.values(), Opciones.values());
+			String [] opc = {"Iniciar Sesion","salir"};
 			
-			switch(a) {
-			
-			case 0: 
-				break;
-			case 1: 
-				break;
-			case 2: 
-				break;
-			case 3: 
-				break;
-			case 4: 
-				break;
-			case 5: 
-				break;
+			int i  = JOptionPane.showOptionDialog(null, "Seleccione", null, 0, 0, null, opc, opc[0]);
+			if (i == 1) {
 				
+				
+				JOptionPane.showMessageDialog(null, "Gracias por su visita");
+				conectado = false;
+				
+			}else {
+				
+				boolean sesion = true;
+				while(sesion == true ) {
+		
+					if (Usuario.Login(JOptionPane.showInputDialog("Ingrese El Usuario"), JOptionPane.showInputDialog("Ingrese la contrasena"))==false ) {
+						
+							JOptionPane.showMessageDialog(null, "Contraseña y/o nombre de usuario incorrectos");
+							
+							 if (1	==  JOptionPane.showOptionDialog(null, "¿Desea continuar?", null, i, i, null, null, null)) {
+								 sesion = false;
+								 break;
+							 }
+						
+						
+					}else {
+						
+							JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso");	
+							
+							
+							int a = JOptionPane.showOptionDialog(null, "Selecciones la accion a realizar",//Mensaje que aparece en la ventana
+								"", //Titulo 
+								0, //
+								JOptionPane.DEFAULT_OPTION, // Elijo la opción de imagen que muestra
+								new ImageIcon(Main.class.getResource("logo.jpg")), //aca va el image icon
+								Opciones.values(),
+								Opciones.values()[0]
+										
+								);
+							
+						
+							switch(a) {
+							
+							case 0: 
+								break;
+							case 1: 
+								break;
+							case 2: 
+								break;
+							case 3: 
+								break;
+							case 4: 
+								break;
+							case 5: 
+
+								sesion = true;
+								break;
+							
+							case 6: 
+								
+								sesion = false;
+								JOptionPane.showMessageDialog(null, "Sesion cerrada");
+								break;
 			
-			
+								}
+					}
+				}
 			
 			}
-			}
 		
-	
+		}
 	}
 		
-	}
+}
 
