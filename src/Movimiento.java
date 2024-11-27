@@ -5,13 +5,26 @@ public class Movimiento {
 	private int numeroMovimiento;
 	private LocalDateTime fecha;
 	private String detalle;
+	private double monto; 
 	
-	public Movimiento(int numeroMovimiento, LocalDateTime fecha, String detalle) {
+	public Movimiento(int numeroMovimiento, LocalDateTime fecha, String detalle, double monto) {
 		super();
 		this.numeroMovimiento = numeroMovimiento;
 		this.fecha = fecha;
 		this.detalle = detalle;
+		this.monto = monto; 
 	}
+	
+
+	public double getMonto() {
+		return monto;
+	}
+
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
 
 	public int getNumeroMovimiento() {
 		return numeroMovimiento;

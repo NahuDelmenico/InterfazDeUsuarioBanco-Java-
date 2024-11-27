@@ -1,5 +1,5 @@
 import java.time.LocalDate;
-import java.util.Iterator;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -10,7 +10,7 @@ public abstract class Main {
 		 
 		Banco Frances = new Banco("Frances");
 		
-		CajaAhorro CuentaNahuel = new CajaAhorro(1,2000000.0,false); 
+		CajaAhorro CuentaNahuel = new CajaAhorro(1,200.0,false); 
 		
 		Administrador Gerente = new Administrador("UserBank", "123456" , LocalDate.of(2000, 1, 1), Frances, 1);
 		Cliente Nahuel = new Cliente("N", "1",LocalDate.of(2024, 10, 20), Frances, CuentaNahuel);
@@ -52,7 +52,6 @@ public abstract class Main {
 						
 							JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso");	
 							
-							
 							int a = JOptionPane.showOptionDialog(null, "Selecciones la accion a realizar",//Mensaje que aparece en la ventana
 								"", //Titulo 
 								0, //
@@ -67,14 +66,20 @@ public abstract class Main {
 							switch(a) {
 							
 							case 0: 
+								
+								Nahuel.Transferir();
 								break;
 							case 1: 
+								Nahuel.Depositar();
 								break;
 							case 2: 
+								Nahuel.Retirar();
 								break;
 							case 3: 
+								Nahuel.VerSaldo();
 								break;
 							case 4: 
+								Nahuel.VerHistorial();
 								break;
 							case 5: 
 
