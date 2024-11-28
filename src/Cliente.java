@@ -43,7 +43,7 @@ public class Cliente extends Usuario {
 			this.getCuenta().setSaldo(this.getCuenta().getSaldo()-m); 
 			
 			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Transferencia",m );
-			//this.getCuenta().getMovimientos().add(nuevo);
+			this.getCuenta().getMovimientos().add(nuevo);
 			
 		
 		}else {
@@ -66,7 +66,7 @@ public class Cliente extends Usuario {
 			this.getCuenta().setSaldo(getCuenta().getSaldo()+m);
 			
 			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Deposito",m );
-			//this.getCuenta().getMovimientos().add(nuevo);
+			this.getCuenta().getMovimientos().add(nuevo);
 			
 			
 		
@@ -90,27 +90,45 @@ public class Cliente extends Usuario {
 			this.getCuenta().setSaldo(this.getCuenta().getSaldo()-m); 
 			
 			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Retiro",m );
-			//this.getCuenta().getMovimientos().add(nuevo);
+			
+			this.getCuenta().getMovimientos().add(nuevo);
 			
 		
 		}else {
 			JOptionPane.showMessageDialog(null, "Saldo insuficiente, operacion cancelada");
 		}
 		}
+
 	public void VerSaldo() {
 		JOptionPane.showMessageDialog(null, "El saldo actual es de $" + this.getCuenta().getSaldo());
 	}
 	
 	@Override 
 	public void VerHistorial() {
-		
-		
-			for(Movimiento mov : this.getCuenta().getMovimientos()) {
-				movimiento = movimiento + "Movimiento "+mov.getNumeroMovimiento() + "  " + mov.getFecha() + "  " + mov.getDetalle() + "             $" + mov.getMonto();  
-			}
-		
+	
+		String movs = "Movimientos\n\n";
+		if(this.getCuenta().getMovimientos().size()==0){
 			
+			JOptionPane.showMessageDialog(null, "Aun no sea han registrado movimientos en la cuenta");
+		}else {
+			
+			for(Movimiento mov :	this.getCuenta().getMovimientos()) {
+				
+				movs = movs + "Movimiento "+mov.getNumeroMovimiento() + "     " + mov.getFecha() + "  " + mov.getDetalle() + "                                        $" + mov.getMonto() + "\n";  
+				
+			}
+			JOptionPane.showMessageDialog(null, movs);
+		}
 		
 	}
+
+	public void PagarTarjeta(Tarjeta tarjeta) {
+		
+	}
+
+
+
 }	
+
+
 

@@ -72,31 +72,6 @@ public abstract class Usuario {
 	public void VerHistorial() {
 		
 	}
-	public boolean Verificacion(String monto) {
-		
-		 
-		if(monto.isEmpty() || monto == "") {
-			JOptionPane.showMessageDialog(null, "El monto no puede estar vacio");
-			return false; 
-			
-		} 
 	
-		for(int i= 0; i<monto.length();i++) {
-				
-				if(Character.isAlphabetic(monto.charAt(i))) {
-					JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
-					return false; 
-				}
-			}
-		double m = Double.parseDouble(monto);
-		
-		if (m < 0) {
-			JOptionPane.showMessageDialog(null, "ingrese un monto positivo");
-			return false; 
-			
-		}
-			return true;
-		}
-		
 	
 }

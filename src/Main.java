@@ -10,10 +10,11 @@ public abstract class Main {
 		 
 		Banco Frances = new Banco("Frances");
 		
-		CajaAhorro CuentaNahuel = new CajaAhorro(1,200.0,false); 
+		CajaAhorro CajaAhorroNahuel = new CajaAhorro(1,200.0,false); 
+		Corriente CuentaCorrienteNahuel = new Corriente(4564,200000,1000000,-1000000);
 		
 		Administrador Gerente = new Administrador("UserBank", "123456" , LocalDate.of(2000, 1, 1), Frances, 1);
-		Cliente Nahuel = new Cliente("N", "1",LocalDate.of(2024, 10, 20), Frances, CuentaNahuel);
+		Cliente Nahuel = new Cliente("N", "1",LocalDate.of(2024, 10, 20), Frances, CajaAhorroNahuel);
 		
 		Usuario.getUsuarios().add(Nahuel);
 		Usuario.getUsuarios().add(Gerente);
@@ -35,23 +36,24 @@ public abstract class Main {
 				
 			}else {
 				
-				boolean sesion = true;
-				while(sesion == true ) {
-		
-					if (Usuario.Login(JOptionPane.showInputDialog("Ingrese El Usuario"), JOptionPane.showInputDialog("Ingrese la contrasena"))==false ) {
+				
+				boolean sesion = Usuario.Login(JOptionPane.showInputDialog("Ingrese El Usuario"), JOptionPane.showInputDialog("Ingrese la contrasena"));
+				
+				while(sesion == false) {
+				
+					JOptionPane.showMessageDialog(null, "Contraseña y/o nombre de usuario incorrectos");
+					
+					 if (1	==  JOptionPane.showOptionDialog(null, "¿Desea continuar?", null, i, i, null, null, null)) {
+						 sesion = true ;
+						 
+					 }else {
+						 sesion = Usuario.Login(JOptionPane.showInputDialog("Ingrese El Usuario"), JOptionPane.showInputDialog("Ingrese la contrasena"));
+					 }
+				}	
 						
-							JOptionPane.showMessageDialog(null, "Contraseña y/o nombre de usuario incorrectos");
-							
-							 if (1	==  JOptionPane.showOptionDialog(null, "¿Desea continuar?", null, i, i, null, null, null)) {
-								 sesion = false;
-								 break;
-							 }
-						
-						
-					}else {
-						
-							JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso");	
-							
+					JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso");
+					boolean cerrarSesion = true;
+					while(cerrarSesion == true) {	
 							int a = JOptionPane.showOptionDialog(null, "Selecciones la accion a realizar",//Mensaje que aparece en la ventana
 								"", //Titulo 
 								0, //
@@ -62,44 +64,85 @@ public abstract class Main {
 										
 								);
 							
-						
+							String[] cuentas = {"Caja de Ahorro","Cuenta Corriente"}; 
 							switch(a) {
-							
-							case 0: 
+							 
+							case 0:
+								//TRANSFERENCIA
+								int c= JOptionPane.showOptionDialog(null, "Seleccione la cuenta", null, 0, 0, null, cuentas, cuentas[0]);
 								
-								Nahuel.Transferir();
+								if(c==0) {
+									CajaAhorroNahuel.Transferir();
+								}else {
+									
+								}
+								
 								break;
 							case 1: 
-								Nahuel.Depositar();
+								//DEPOSITO
+								 c= JOptionPane.showOptionDialog(null, "Seleccione la cuenta", null, 0, 0, null, cuentas, cuentas[0]);
+								
+								if(c==0) {
+									CajaAhorroNahuel.Depositar();
+								}else {
+									
+								}
+								
 								break;
 							case 2: 
-								Nahuel.Retirar();
+								//RETIRAR
+								 c= JOptionPane.showOptionDialog(null, "Seleccione la cuenta", null, 0, 0, null, cuentas, cuentas[0]);
+								
+								if(c==0) {
+									CajaAhorroNahuel.Retirar();
+								}else {
+									
+								}
+								
 								break;
 							case 3: 
-								Nahuel.VerSaldo();
+								//VER SALDO
+								c= JOptionPane.showOptionDialog(null, "Seleccione la cuenta", null, 0, 0, null, cuentas, cuentas[0]);
+								
+								if(c==0) {
+									CajaAhorroNahuel.VerSaldo();
+								}else {
+									
+								}
+								
 								break;
 							case 4: 
-								Nahuel.VerHistorial();
+								//VER HISTORIAL
+								c= JOptionPane.showOptionDialog(null, "Seleccione la cuenta", null, 0, 0, null, cuentas, cuentas[0]);
+								
+								if(c==0) {
+									
+									
+								}else {
+									
+								}
+								
 								break;
 							case 5: 
-
-								sesion = true;
+								//TARJETA
 								break;
-							
-							case 6: 
-								
-								sesion = false;
+							case 6:
+								//CHEQUE
+								CuentaCorrienteNahuel.emitirCheque();
+								break;
+							case 7: 
+								//SALIR
+								cerrarSesion = false;
+								sesion= false;
 								JOptionPane.showMessageDialog(null, "Sesion cerrada");
 								break;
 			
 								}
+						}
 					}
 				}
-			
 			}
-		
-		}
 	}
-		
-}
+
+
 
