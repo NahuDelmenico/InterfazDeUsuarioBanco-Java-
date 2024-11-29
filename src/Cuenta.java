@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -7,7 +7,8 @@ public abstract class Cuenta {
 		
 		private int nroCuenta;
 		private double saldo;
-		private LinkedList<Tarjeta> tarjeta = new LinkedList<Tarjeta>();
+		private LinkedList<Credito> tarjetaCredito = new LinkedList<Credito>();
+		private LinkedList<Debito> tarjetaDebito = new LinkedList<Debito>();
 		private LinkedList<Movimiento> movimientos = new LinkedList<Movimiento>();
 		
 
@@ -39,13 +40,24 @@ public abstract class Cuenta {
 		}
 		
 
-		public LinkedList<Tarjeta> getTarjeta() {
-			return tarjeta;
+
+		public LinkedList<Credito> getTarjetaCredito() {
+			return tarjetaCredito;
 		}
 
 
-		public void setTarjeta(LinkedList<Tarjeta> tarjeta) {
-			this.tarjeta = tarjeta;
+		public void setTarjetaCredito(LinkedList<Credito> tarjetaCredito) {
+			this.tarjetaCredito = tarjetaCredito;
+		}
+
+
+		public LinkedList<Debito> getTarjetaDebito() {
+			return tarjetaDebito;
+		}
+
+
+		public void setTarjetaDebito(LinkedList<Debito> tarjetaDebito) {
+			this.tarjetaDebito = tarjetaDebito;
 		}
 
 
@@ -84,10 +96,27 @@ public abstract class Cuenta {
 				return true;
 			}
 			
-		public void Transferir() {};
+		public void Transferir(Cuenta receptor) {};
 		public void Retirar() {};
 		public void Depositar() {};
 		public void VerSaldo() {};
-		
-		
+		public void VerHistorial() {
+			
+			String movs = "Movimientos\n\n";
+			if(this.getMovimientos().size()==0){
+				
+				JOptionPane.showMessageDialog(null, "Aun no sea han registrado movimientos en la cuenta");
+			}else {
+				
+				for(Movimiento mov :	this.getMovimientos()) {
+					
+					movs = movs + "Movimiento "+mov.getNumeroMovimiento() + "     " + mov.getFecha() + "  " + mov.getDetalle() + mov.getMonto() + "\n";  
+					
+				}
+				JOptionPane.showMessageDialog(null, movs);
+			}
+			
+		}
+		public void Pagar_con_tarjeta_Credito() {};
+		public void Pagar_con_tarjeta_Debito() {};
 }

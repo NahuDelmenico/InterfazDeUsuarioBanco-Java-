@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 
+
 import javax.swing.JOptionPane;
 
 public class CajaAhorro extends Cuenta {
@@ -20,7 +21,7 @@ public class CajaAhorro extends Cuenta {
 	}
 
 	@Override
-	public void Transferir() {
+	public void Transferir(Cuenta receptor) {
 		String monto = JOptionPane.showInputDialog("Ingrese el monto a transferir");
 		
 		
@@ -34,10 +35,19 @@ public class CajaAhorro extends Cuenta {
 			
 			JOptionPane.showMessageDialog(null, "Transferencia exitosa");
 			
-			this.setSaldo(this.getSaldo()-m); 
-			
-			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Transferencia",m );
+			if(this.dolares == true) {
+			this.setSaldo(this.getSaldo()-(m+(m*2/100))); 
+			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Transferencia     -$",(m+(m*2/100)) );
 			this.getMovimientos().add(nuevo);
+			}else {
+				this.setSaldo(this.getSaldo()-(m)); 
+				Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Transferencia     -$",m );
+				this.getMovimientos().add(nuevo);
+				
+			}
+			receptor.setSaldo(receptor.getSaldo()+m);
+			Movimiento recep = new Movimiento(1,LocalDateTime.now(), "Transferencia     +$",m );
+			receptor.getMovimientos().add(recep);
 			
 		
 		}else {
@@ -51,7 +61,7 @@ public class CajaAhorro extends Cuenta {
 		
 		
 		while(Verificacion(monto) == false) {
-			monto = JOptionPane.showInputDialog("Ingrese el monto a transferir");
+			monto = JOptionPane.showInputDialog("Ingrese el monto a retirar");
 		}
 		
 		double m = Double.parseDouble(monto);
@@ -62,7 +72,7 @@ public class CajaAhorro extends Cuenta {
 			
 			this.setSaldo(this.getSaldo()-m); 
 			
-			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Retiro",m );
+			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Retiro  -$",m );
 			
 			this.getMovimientos().add(nuevo);
 			
@@ -77,7 +87,7 @@ public class CajaAhorro extends Cuenta {
 		String monto = JOptionPane.showInputDialog("Ingrese el monto a depositar");
 		
 		while(Verificacion(monto) == false) {
-			monto = JOptionPane.showInputDialog("Ingrese el monto a transferir");
+			monto = JOptionPane.showInputDialog("Ingrese el monto a depositar");
 		}
 		
 		double m = Double.parseDouble(monto);
@@ -87,7 +97,7 @@ public class CajaAhorro extends Cuenta {
 			
 			this.setSaldo(getSaldo()+m);
 			
-			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Deposito",m );
+			Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Deposito   +$",m );
 			this.getMovimientos().add(nuevo);
 			
 	}
@@ -96,7 +106,110 @@ public class CajaAhorro extends Cuenta {
 	public void VerSaldo() {
 		JOptionPane.showMessageDialog(null, "El saldo actual es de $" + this.getSaldo());
 	}
+
+	@Override
+	public void VerHistorial() {
+		// TODO Auto-generated method stub
+		super.VerHistorial();
+	}
+
+	@Override
+	public void Pagar_con_tarjeta_Credito() {
+		
+		if (this.getTarjetaCredito().size()==0) {
+			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de credito disponibles");
+		}else {
+			String[] cuotas = {"1","3","6","9"};
+
+			String monto = JOptionPane.showInputDialog("Ingrese el monto a pagar");
+			
+			while(Verificacion(monto) == false) {
+				monto = JOptionPane.showInputDialog("Ingrese el monto a pagar");
+			}
+			
+			double m = Double.parseDouble(monto);
+			
+			int v = 0;
+			String [] tarjetas = new String[this.getTarjetaCredito().size()] ;
+			for(Credito c : this.getTarjetaCredito()) {
+				tarjetas[v] = String.valueOf(c.getNumeroTarjeta());
+				v++;
+			}
+			v =0;
+			
+			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0, 0, null, tarjetas, tarjetas[0]);
+			
+			
+			if (m <= this.getTarjetaCredito().get(a).getLimiteDeuda() ) {
+				int c = JOptionPane.showOptionDialog(null, "Seleccione la cuotas sin interes", null, 0, 0, null, cuotas, cuotas[0]);
+				
+				this.getTarjetaCredito().get(a).setLimiteDeuda(this.getTarjetaCredito().get(a).getLimiteDeuda()-m);
+				this.getTarjetaCredito().get(a).setTotalAPagar(this.getTarjetaCredito().get(a).getTotalAPagar()+m);
+				
+				Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Tarjeta de Credito Cuotas:" +cuotas[c]+"    $",m );
+				this.getMovimientos().add(nuevo);
+				
+				JOptionPane.showMessageDialog(null, "Operacion Exitosa \nTotal a pagar: $"+m+"\nCuotas: "+cuotas[c]+" x $"+ m/Integer.parseInt(cuotas[c]));
+			}else {
+				JOptionPane.showMessageDialog(null, "Limite de deuda alcanzado.\nLimite de tarjeta:" + this.getTarjetaCredito().get(a).getLimiteDeuda()+"\nOperacion cancelada");
+			}
+			
+			
+		}
+	}
+
+	@Override
+	public void Pagar_con_tarjeta_Debito() {
+		
+		if (this.getTarjetaDebito().size()==0) {
+			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de debito disponibles");
+		}else {
+			
+			String monto = JOptionPane.showInputDialog("Ingrese el monto a pagar");
+			
+			while(Verificacion(monto) == false) {
+				monto = JOptionPane.showInputDialog("Ingrese el monto a pagar");
+			}
+			
+			double m = Double.parseDouble(monto);
+			
+			int v = 0;
+			String [] tarjetas = new String[this.getTarjetaDebito().size()] ;
+			for(Debito c : this.getTarjetaDebito()) {
+				tarjetas[v] = String.valueOf(c.getNumeroTarjeta());
+				v++;
+			}
+			v =0;
+			
+			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0, 0, null, tarjetas, tarjetas[0]);
+		
+			if(m <= this.getTarjetaDebito().get(a).getLimiteCompra() && m <=this.getSaldo()) {
+				
+				this.setSaldo(this.getSaldo()-m);
+				
+				Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Tarjeta de Debito    -$",m );
+				this.getMovimientos().add(nuevo);
+				
+				JOptionPane.showMessageDialog(null, "Operacion Exitosa");
+			}else {
+				JOptionPane.showMessageDialog(null, "Limite de pago alcanzado y/o saldo insuficiente.\nLimite de tarjeta:" + this.getTarjetaDebito().get(a).getLimiteCompra()+"\nOperacion cancelada");
+			}
+			
+		}
+		
+	}
+
 	
 	
+
 	
+	
+
+
 }
+	
+	
+	
+	
+	
+

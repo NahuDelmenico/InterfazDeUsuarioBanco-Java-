@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-import javax.swing.JOptionPane;
+
 
 public abstract class Usuario {
 	
@@ -9,7 +9,8 @@ public abstract class Usuario {
 	private String nombre;
 	private String contrasenia;
 	private LocalDate alta;
-	private static LinkedList<Usuario> Usuarios = new LinkedList<Usuario>();;
+	private static LinkedList<Cliente> Clientes = new LinkedList<Cliente>();;
+	private static LinkedList<Administrador> Administradores = new LinkedList<Administrador>();;
 	private Banco banco;
 	public String getNombre() {
 		return nombre;
@@ -40,12 +41,22 @@ public abstract class Usuario {
 	public void setAlta(LocalDate alta) {
 		this.alta = alta;
 	}
-	public static LinkedList<Usuario> getUsuarios() {
-		return Usuarios;
+	
+	public static LinkedList<Cliente> getClientes() {
+		return Clientes;
 	}
-	public static void setUsuarios(LinkedList<Usuario> usuarios) {
-		Usuarios = usuarios;
+	public static void setClientes(LinkedList<Cliente> clientes) {
+		Clientes = clientes;
 	}
+
+	public static LinkedList<Administrador> getAdministradores() {
+		return Administradores;
+	}
+
+	public static void setAdministradores(LinkedList<Administrador> administradores) {
+		Administradores = administradores;
+	}
+
 	public Banco getBanco() {
 		return banco;
 	}
@@ -53,25 +64,9 @@ public abstract class Usuario {
 		this.banco = banco;
 	}
 	
-	public static boolean Login(String user, String contra){
-		
-		boolean flag = false;
-		
-		for(Usuario u : Usuarios) {
-			
-			if(user.equals(u.getNombre()) && contra.equals(u.getContrasenia())) {
-				flag = true;
-				break;
-			}
-			
-		}
-			
-		return flag;
-	}
 	
-	public void VerHistorial() {
-		
-	}
+
+	
 	
 	
 }

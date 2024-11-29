@@ -4,11 +4,14 @@ public class Debito extends Tarjeta{
 	private double limiteCompra;
 	
 	
-	public Debito(int numeroTarjeta, double limiteRetiro, double limiteCompra) {
-		super(numeroTarjeta);
+	
+
+	public Debito(int numeroTarjeta, boolean credito, double limiteRetiro, double limiteCompra) {
+		super(numeroTarjeta, credito);
 		this.limiteRetiro = limiteRetiro;
 		this.limiteCompra = limiteCompra;
 	}
+
 
 	public double getLimiteRetiro() {
 		return limiteRetiro;
