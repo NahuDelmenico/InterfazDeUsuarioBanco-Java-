@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -46,7 +47,8 @@ public class Administrador extends Usuario {
 	 
 	public void crearCliente(){
 		String[]cuentas= {"Cuenta corriente","Caja de Ahorro"};
-		int c= JOptionPane.showOptionDialog(null, "Seleccione el tipo de cuenta", null, 0, 0, null, cuentas, cuentas[0]);
+		int c= JOptionPane.showOptionDialog(null, "Seleccione el tipo de cuenta", null, 0, JOptionPane.DEFAULT_OPTION, // Elijo la opción de imagen que muestra
+				new ImageIcon(Administrador.class.getResource("agregar.png")), cuentas, cuentas[0]);
 		if(c==0) {
 			String nombre = JOptionPane.showInputDialog("Ingrese el nombre de usuario");
 			while(Verificacion(nombre) == false) {
@@ -123,7 +125,7 @@ public class Administrador extends Usuario {
 			a++;
 		}
 		a=0;
-		JOptionPane.showMessageDialog(null, lista);
+		JOptionPane.showMessageDialog(null, lista, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("lista.png")));
 	}
 	
 	public void crearTarjetaDebito(){
@@ -147,6 +149,7 @@ public class Administrador extends Usuario {
 		Debito nueva = new Debito(num,false, 1000000, 2000000);
 		
 		Usuario.getClientes().get(c).getCuenta().getTarjetaDebito().add(nueva);
+		JOptionPane.showMessageDialog(null, "Tarjeta de Debito creada con exito");
 		
 	}
 	
@@ -171,7 +174,7 @@ public class Administrador extends Usuario {
 		Credito nueva = new Credito(num,true, 1000000,0);
 		
 		Usuario.getClientes().get(c).getCuenta().getTarjetaCredito().add(nueva);
-		
+		JOptionPane.showMessageDialog(null, "Tarjeta de Credito creada con exito");
 	}
 	
 	

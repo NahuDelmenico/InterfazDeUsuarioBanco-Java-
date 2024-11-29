@@ -31,7 +31,10 @@ public class Mainn {
 		
 		boolean conectado = true;
 		
-		JOptionPane.showMessageDialog(null, "Bienvenido al BBVA Argentina");
+		JOptionPane.showMessageDialog(null,  "Bienvenido al BBVA Argentina",null,JOptionPane.DEFAULT_OPTION,new ImageIcon(Mainn.class.getResource("inicio.jpg")));
+		
+	
+		
 		while(conectado == true) {
 		
 		
@@ -148,12 +151,13 @@ public class Mainn {
 							
 						case 2:
 							String[]tiposTarjetas = {"Credito","Debito"};
-							int t =JOptionPane.showOptionDialog(null, "Seleccione el tipo de tarjeta a crear", null, 0, 0, null, tiposTarjetas, tiposTarjetas[0]);
+							int t =JOptionPane.showOptionDialog(null, "Seleccione el tipo de tarjeta a crear", null, 0, JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("tarjeta.png")), tiposTarjetas, tiposTarjetas[0]);
 							if(t==0) {
 								Gerente.crearTarjetaCredito();
 							}else {
 								Gerente.crearTarjetaDebito();
 							}
+							break;
 						case 3:
 							
 							bucle = false;
