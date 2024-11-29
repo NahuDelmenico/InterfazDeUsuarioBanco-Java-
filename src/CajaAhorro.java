@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class CajaAhorro extends Cuenta {
@@ -33,7 +33,7 @@ public class CajaAhorro extends Cuenta {
 		
 		if(m <= this.getSaldo()) {
 			
-			JOptionPane.showMessageDialog(null, "Transferencia exitosa");
+			JOptionPane.showMessageDialog(null, "Transferencia exitosa", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("transferir.png")));
 			
 			if(this.dolares == true) {
 			this.setSaldo(this.getSaldo()-(m+(m*2/100))); 
@@ -51,7 +51,7 @@ public class CajaAhorro extends Cuenta {
 			
 		
 		}else {
-			JOptionPane.showMessageDialog(null, "Saldo insuficiente, operacion cancelada");
+			JOptionPane.showMessageDialog(null, "Saldo insuficiente, operacion cancelada", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("error.png")));
 		}
 	}
 
@@ -68,7 +68,7 @@ public class CajaAhorro extends Cuenta {
 		
 		if(m <= this.getSaldo()) {
 			
-			JOptionPane.showMessageDialog(null, "Retiro exitoso");
+			JOptionPane.showMessageDialog(null, "Retiro exitoso", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("retirar.png")));
 			
 			this.setSaldo(this.getSaldo()-m); 
 			
@@ -78,7 +78,7 @@ public class CajaAhorro extends Cuenta {
 			
 		
 		}else {
-			JOptionPane.showMessageDialog(null, "Saldo insuficiente, operacion cancelada");
+			JOptionPane.showMessageDialog(null, "Saldo insuficiente, operacion cancelada", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("error.png")));
 		}
 	}
 
@@ -93,7 +93,7 @@ public class CajaAhorro extends Cuenta {
 		double m = Double.parseDouble(monto);
 		
 		
-			JOptionPane.showMessageDialog(null, "Deposito exitoso");
+			JOptionPane.showMessageDialog(null, "Deposito exitoso", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("deposito.png")));
 			
 			this.setSaldo(getSaldo()+m);
 			
@@ -104,7 +104,7 @@ public class CajaAhorro extends Cuenta {
 
 	@Override
 	public void VerSaldo() {
-		JOptionPane.showMessageDialog(null, "El saldo actual es de $" + this.getSaldo());
+		JOptionPane.showMessageDialog(null, "El saldo actual es de $" + this.getSaldo(), null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("saldo.png")));
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class CajaAhorro extends Cuenta {
 	public void Pagar_con_tarjeta_Credito() {
 		
 		if (this.getTarjetaCredito().size()==0) {
-			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de credito disponibles");
+			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de credito disponibles", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("error.png")));
 		}else {
 			String[] cuotas = {"1","3","6","9"};
 
@@ -162,7 +162,7 @@ public class CajaAhorro extends Cuenta {
 	public void Pagar_con_tarjeta_Debito() {
 		
 		if (this.getTarjetaDebito().size()==0) {
-			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de debito disponibles");
+			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de debito disponibles",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("error.png")));
 		}else {
 			
 			String monto = JOptionPane.showInputDialog("Ingrese el monto a pagar");
@@ -181,7 +181,7 @@ public class CajaAhorro extends Cuenta {
 			}
 			v =0;
 			
-			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0, 0, null, tarjetas, tarjetas[0]);
+			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("tarjeta.png")), tarjetas, tarjetas[0]);
 		
 			if(m <= this.getTarjetaDebito().get(a).getLimiteCompra() && m <=this.getSaldo()) {
 				
@@ -190,9 +190,9 @@ public class CajaAhorro extends Cuenta {
 				Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Tarjeta de Debito    -$",m );
 				this.getMovimientos().add(nuevo);
 				
-				JOptionPane.showMessageDialog(null, "Operacion Exitosa");
+				JOptionPane.showMessageDialog(null, "Operacion Exitosa", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("tarjeta.png")));
 			}else {
-				JOptionPane.showMessageDialog(null, "Limite de pago alcanzado y/o saldo insuficiente.\nLimite de tarjeta:" + this.getTarjetaDebito().get(a).getLimiteCompra()+"\nOperacion cancelada");
+				JOptionPane.showMessageDialog(null, "Limite de pago alcanzado y/o saldo insuficiente.\nLimite de tarjeta:" + this.getTarjetaDebito().get(a).getLimiteCompra()+"\nOperacion cancelada", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(CajaAhorro.class.getResource("error.png")));
 			}
 			
 		}

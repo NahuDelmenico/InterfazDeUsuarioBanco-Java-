@@ -1,7 +1,7 @@
 
 import java.time.LocalDateTime;
 
-
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Corriente extends Cuenta{
@@ -84,7 +84,7 @@ public class Corriente extends Cuenta{
 		
 		if(m <= this.limiteNegativo+this.getSaldo()) {
 			
-			JOptionPane.showMessageDialog(null, "Transferencia exitosa");
+			JOptionPane.showMessageDialog(null, "Transferencia exitosa",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("transferir.png")));
 			
 			
 				this.setSaldo(this.getSaldo()-(m)); 
@@ -98,7 +98,7 @@ public class Corriente extends Cuenta{
 			
 		
 		}else {
-			JOptionPane.showMessageDialog(null, "Saldo insuficiente y/o limite de cuenta alcanzado, operacion cancelada");
+			JOptionPane.showMessageDialog(null, "Saldo insuficiente y/o limite de cuenta alcanzado, operacion cancelada",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("error.png")));
 		}
 		
 	}
@@ -116,7 +116,7 @@ public class Corriente extends Cuenta{
 		
 		if(m <= this.limiteNegativo+this.getSaldo()) {
 			
-			JOptionPane.showMessageDialog(null, "Retiro exitoso");
+			JOptionPane.showMessageDialog(null, "Retiro exitoso",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("retirar.png")));
 			
 			this.setSaldo(this.getSaldo()-m); 
 			
@@ -126,7 +126,7 @@ public class Corriente extends Cuenta{
 			
 		
 		}else {
-			JOptionPane.showMessageDialog(null, "Saldo insuficiente y/o limite de cuenta alcanzado, operacion cancelada");
+			JOptionPane.showMessageDialog(null, "Saldo insuficiente y/o limite de cuenta alcanzado, operacion cancelada",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("error.png")));
 		}
 	}
 
@@ -141,7 +141,7 @@ public class Corriente extends Cuenta{
 		double m = Double.parseDouble(monto);
 		
 		
-			JOptionPane.showMessageDialog(null, "Deposito exitoso");
+			JOptionPane.showMessageDialog(null, "Deposito exitoso",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("deposito.png")));
 			
 			this.setSaldo(getSaldo()+m);
 			
@@ -152,7 +152,7 @@ public class Corriente extends Cuenta{
 
 	@Override
 	public void VerSaldo() {
-		JOptionPane.showMessageDialog(null, "El saldo actual es de $" + this.getSaldo()+"\nLimite de deuda de la cuenta: $" +this.limiteNegativo);
+		JOptionPane.showMessageDialog(null, "El saldo actual es de $" + this.getSaldo()+"\nLimite de deuda de la cuenta: $" +this.limiteNegativo,null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("saldo.png")));
 	}
 
 	@Override
@@ -162,10 +162,10 @@ public class Corriente extends Cuenta{
 	}
 		
 	@Override
-	public void Pagar_con_tarjeta_Credito() {
+ 	public void Pagar_con_tarjeta_Credito() {
 		
 		if (this.getTarjetaCredito().size()==0) {
-			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de credito disponibles");
+			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de credito disponibles",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("error.png")));
 		}else {
 			String[] cuotas = {"1","3","6","9"};
 
@@ -185,11 +185,11 @@ public class Corriente extends Cuenta{
 			}
 			v =0;
 			
-			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0, 0, null, tarjetas, tarjetas[0]);
+			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("tarjeta.png")), tarjetas, tarjetas[0]);
 			
 			
 			if (m <= this.getTarjetaCredito().get(a).getLimiteDeuda() ) {
-				int c = JOptionPane.showOptionDialog(null, "Seleccione la cuotas sin interes", null, 0, 0, null, cuotas, cuotas[0]);
+				int c = JOptionPane.showOptionDialog(null, "Seleccione la cuotas sin interes", null, 0,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("tarjeta.png")), cuotas, cuotas[0]);
 				
 				this.getTarjetaCredito().get(a).setLimiteDeuda(this.getTarjetaCredito().get(a).getLimiteDeuda()-m);
 				this.getTarjetaCredito().get(a).setTotalAPagar(this.getTarjetaCredito().get(a).getTotalAPagar()+m);
@@ -197,20 +197,20 @@ public class Corriente extends Cuenta{
 				Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Tarjeta de Credito Cuotas:" +cuotas[c]+"    $",m );
 				this.getMovimientos().add(nuevo);
 				
-				JOptionPane.showMessageDialog(null, "Operacion Exitosa \nTotal a pagar: $"+m+"\nCuotas: "+cuotas[c]+" x $"+ m/Integer.parseInt(cuotas[c]));
+				JOptionPane.showMessageDialog(null, "Operacion Exitosa \nTotal a pagar: $"+m+"\nCuotas: "+cuotas[c]+" x $"+ m/Integer.parseInt(cuotas[c]),null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("tarjeta.png")));
 			}else {
-				JOptionPane.showMessageDialog(null, "Limite de deuda alcanzado.\nLimite de tarjeta:" + this.getTarjetaCredito().get(a).getLimiteDeuda()+"\nOperacion cancelada");
+				JOptionPane.showMessageDialog(null, "Limite de deuda alcanzado.\nLimite de tarjeta:" + this.getTarjetaCredito().get(a).getLimiteDeuda()+"\nOperacion cancelada",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("error.png")));
 			}
-			
+		}
 			
 		}
-	}
+	
 
 	@Override
 	public void Pagar_con_tarjeta_Debito() {
 		
 		if (this.getTarjetaDebito().size()==0) {
-			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de debito disponibles");
+			JOptionPane.showMessageDialog(null, "Ustede no tiene tarjetas de debito disponibles",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("error.png")));
 		}else {
 			
 			String monto = JOptionPane.showInputDialog("Ingrese el monto a pagar");
@@ -229,7 +229,7 @@ public class Corriente extends Cuenta{
 			}
 			v =0;
 			
-			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0, 0, null, tarjetas, tarjetas[0]);
+			int a = JOptionPane.showOptionDialog(null, "Seleccione la tarjeta", null, 0,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("tarjeta.png")), tarjetas, tarjetas[0]);
 		
 			if(m <= this.getTarjetaDebito().get(a).getLimiteCompra() && m <= this.limiteNegativo+this.getSaldo()  ) {
 				
@@ -239,13 +239,15 @@ public class Corriente extends Cuenta{
 				Movimiento nuevo = new Movimiento(1,LocalDateTime.now(), "Tarjeta de Debito    -$",m );
 				this.getMovimientos().add(nuevo);
 				
-				JOptionPane.showMessageDialog(null, "Operacion Exitosa");
+				JOptionPane.showMessageDialog(null, "Operacion Exitosa",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("tarjeta.png")));
 			}else {
-				JOptionPane.showMessageDialog(null, "Limite de pago alcanzado y/o saldo insuficiente.\nLimite de tarjeta:" + this.getTarjetaDebito().get(a).getLimiteCompra()+"\nOperacion cancelada");
+				JOptionPane.showMessageDialog(null, "Limite de pago alcanzado y/o saldo insuficiente.\nLimite de tarjeta:" + this.getTarjetaDebito().get(a).getLimiteCompra()+"\nOperacion cancelada",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Corriente.class.getResource("error.png")));
 			}
 			
 		}
 		
-	}
 	
+	
+}
+
 }

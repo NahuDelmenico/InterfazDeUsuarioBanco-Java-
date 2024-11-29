@@ -151,7 +151,7 @@ public class Mainn {
 							
 						case 2:
 							String[]tiposTarjetas = {"Credito","Debito"};
-							int t =JOptionPane.showOptionDialog(null, "Seleccione el tipo de tarjeta a crear", null, 0, JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("tarjeta.png")), tiposTarjetas, tiposTarjetas[0]);
+							int t =JOptionPane.showOptionDialog(null, "Seleccione el tipo de tarjeta a crear", null, 0, JOptionPane.DEFAULT_OPTION, new ImageIcon(Mainn.class.getResource("tarjeta.png")), tiposTarjetas, tiposTarjetas[0]);
 							if(t==0) {
 								Gerente.crearTarjetaCredito();
 							}else {

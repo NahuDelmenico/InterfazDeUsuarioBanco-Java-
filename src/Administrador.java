@@ -138,7 +138,7 @@ public class Administrador extends Usuario {
 		}
 		num=0;
 		
-		int c = JOptionPane.showOptionDialog(null, "Seleccione el Cliente", null, 0, 0, null, clientes, clientes[0]);
+		int c = JOptionPane.showOptionDialog(null, "Seleccione el Cliente", null, 0, JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("tarjeta.png")), clientes, clientes[0]);
 		
 		String numero = JOptionPane.showInputDialog("Ingrese el numero de la tarjeta");
 		while(Verificacion(numero) == false) {
@@ -149,7 +149,7 @@ public class Administrador extends Usuario {
 		Debito nueva = new Debito(num,false, 1000000, 2000000);
 		
 		Usuario.getClientes().get(c).getCuenta().getTarjetaDebito().add(nueva);
-		JOptionPane.showMessageDialog(null, "Tarjeta de Debito creada con exito");
+		JOptionPane.showMessageDialog(null, "Tarjeta de Debito creada con exito", null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("tarjeta.png")));
 		
 	}
 	
@@ -163,7 +163,7 @@ public class Administrador extends Usuario {
 		}
 		num=0;
 		
-		int c = JOptionPane.showOptionDialog(null, "Seleccione el Cliente", null, 0, 0, null, clientes, clientes[0]);
+		int c = JOptionPane.showOptionDialog(null, "Seleccione el Cliente", null, 0, JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("tarjeta.png")), clientes, clientes[0]);
 		
 		String numero = JOptionPane.showInputDialog("Ingrese el numero de la tarjeta");
 		while(Verificacion(numero) == false) {
@@ -174,7 +174,9 @@ public class Administrador extends Usuario {
 		Credito nueva = new Credito(num,true, 1000000,0);
 		
 		Usuario.getClientes().get(c).getCuenta().getTarjetaCredito().add(nueva);
-		JOptionPane.showMessageDialog(null, "Tarjeta de Credito creada con exito");
+		JOptionPane.showMessageDialog(null, "Tarjeta de Credito creada con exito",null,JOptionPane.DEFAULT_OPTION, new ImageIcon(Administrador.class.getResource("tarjeta.png"))
+				
+				);
 	}
 	
 	
